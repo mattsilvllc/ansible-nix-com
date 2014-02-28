@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # your network.
   # config.vm.network :public_network
 
-  # If true, then any SSH connections made will enable agent forwarding.
+  # If true, then any SSH connections made will enable agent forwarding.w
   # Default value: false
   # config.ssh.forward_agent = true
 

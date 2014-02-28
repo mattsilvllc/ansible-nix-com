@@ -1,8 +1,8 @@
 ---
 - hosts: all
-  user: root
+  user: vagrant
   vars_files:
-    - settings.yml
+    - vars/default-settings.yml
 
   tasks:
 
@@ -73,7 +73,7 @@
         action: template src=templates/etc-mysql-my-cnf.j2 dest=/etc/mysql/my.cnf
         tags: common
 
-      - include: ../common-tasks/mysql-secure.yml
+      - include: tasks/mysql-secure.yml
 
       ##
       # Apache2 setup.
