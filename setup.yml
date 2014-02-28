@@ -95,6 +95,16 @@
         tags: common
 
 
+      ##
+      # Restart services
+      #
+      - name: Restart Apache
+        action: service name=apache2 state=restarted
+        tags: common
+
+      - name: Restart MySQL
+        action: service name=mysql state=restarted
+        tags: common
 
 
 
