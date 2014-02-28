@@ -1,0 +1,105 @@
+---
+- hosts: all
+  user: root
+  vars_files:
+    - settings.yml
+
+  tasks:
+
+      - name: Update apt
+        apt: update_cache=yes
+
+      # Ensure python software properties are installed
+      - name: Install All System Dependencies
+        apt: pkg=$item state=installed update_cache=yes
+        with_items:
+          - make
+          - python-software-properties
+          - g++
+          - make
+          - build-essential
+          - openssl
+          - libreadline6
+          - libreadline6-dev
+          - curl
+          - libcurl4-openssl-dev
+          - git-core
+          - zlib1g
+          - zlib1g-dev
+          - libssl-dev
+          - libyaml-dev
+          - libsqlite3-dev
+          - sqlite3
+          - libxml2-dev
+          - autoconf
+          - libc6-dev
+          - automake
+          - libtool
+          - bison
+          - subversion
+          - pkg-config
+          - ruby1.9.1-dev
+          - python-dev
+          - libxml2-dev
+          - libxslt1-dev
+          - php5
+          - apache2
+          - mysql-server
+          - mysql-client
+          - php5-mysql
+          - php-apc
+          - php5-xmlrpc
+          - php-soap
+          - php5-gd
+          - sendmail
+          - unzip
+          - python-mysqldb
+
+      ##
+      # PHP Setup.
+      #
+      - name: PHP | Configuration file, php.ini
+        action: template src=templates/etc-php5-apache2-php-ini.j2 dest=/etc/php5/apache2/php.ini
+        tags: common
+
+      - name: APC | Cache configuration file, apc.ini
+        action: template src=templates/etc-php5-conf-d-apc-ini.j2 dest=/etc/php5/conf.d/apc.ini
+        tags: common
+
+      ##
+      # MySQL database setup.
+      #
+      - name: MySQL | Configuration file, my.cnf
+        action: template src=templates/etc-mysql-my-cnf.j2 dest=/etc/mysql/my.cnf
+        tags: common
+
+      - include: ../common-tasks/mysql-secure.yml
+
+      ##
+      # Apache2 setup.
+      #
+      - name: Apache | Enable some required modules
+        action: command a2enmod rewrite vhost_alias
+        tags: common
+
+      - name: Apache | Configuration file for our site
+        action: template src=templates/etc-apache2-sites-available-devserver.j2 dest=/etc/apache2/sites-available/devserver
+        tags: common
+
+      - name: Apache | Disable the default site
+        action: command a2dissite default
+        tags: common
+
+      - name: Apache | Enable our new site
+        action: command a2ensite devserver
+        tags: common
+
+
+
+
+
+
+
+
+
+
