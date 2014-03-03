@@ -20,3 +20,7 @@ vagrant up
 #### from within the vagrant files directory
 vagrant provision
 ```
+
+The `Vagrantfile` is configured to mount one directory up from the directory you cloned this project into. It mounts iselft to `/home/vagrant/www` within the virtual machine. Any files in the mounted directory will be accessible within the virtual machine and apache is configured to serve `/home/vagrant/www`.
+
+Vagrant is attached to LOCAL IP `192.168.33.10` and apache is attached to port 80.

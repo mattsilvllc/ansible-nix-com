@@ -94,6 +94,14 @@
         action: command a2ensite devserver
         tags: common
 
+      - name: PHP | Info file
+        action: template src=templates/index.php dest=/home/vagrant/www/index.php
+        tags: common
+
+      - name: Set permissions
+        action: file path=/home/vagrant/www/index.php mode=0755
+        tags: common
+
 
       ##
       # Restart services
