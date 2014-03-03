@@ -17,9 +17,17 @@ vagrant up
 #### Bootstrap an existing vagrant box
 
 ```shell
-#### from within the vagrant files directory
+#### from within the Vagrantfile's directory
 vagrant provision
 ```
+
+This will bootstrap the virtual machine using ansible setup.yml
+
+Default settings are located under `vars/default-settings.yml`
+
+Those defaults populate special templates within the `templates` directory and those templates are mirrored onto the virtual machine to confiure the services.
+
+Anytime a setting is changed, it needs to be done from within the .yml files to keep the environment consistent.
 
 The `Vagrantfile` is configured to mount one directory up from the directory you cloned this project into. It mounts iselft to `/home/vagrant/www` within the virtual machine. Any files in the mounted directory will be accessible within the virtual machine and apache is configured to serve `/home/vagrant/www`.
 
