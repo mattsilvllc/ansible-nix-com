@@ -10,9 +10,15 @@ project and new `.box` image should be distributed to the cloud and everyone sho
 
 #### Base installation
 
+clone this repo
+
+cd into the directory you cloned it into and run the following command
+
 ```shell
 vagrant up
 ```
+
+this command will start a virual machine, and bootstrap it wil ansible `setup.yml`.
 
 #### Bootstrap an existing vagrant box
 
@@ -21,7 +27,7 @@ vagrant up
 vagrant provision
 ```
 
-This will bootstrap the virtual machine using ansible setup.yml
+This will bootstrap the virtual machine already running on vagrant using ansible `setup.yml`
 
 Default settings are located under `vars/default-settings.yml`
 
