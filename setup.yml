@@ -86,20 +86,62 @@
         action: template src=templates/etc-apache2-sites-available-devserver.j2 dest=/etc/apache2/sites-available/devserver
         tags: common
 
-      - name: Apache | Disable the default site
-        action: command a2dissite default
+      # - name: Apache | Disable the default site
+      #   action: command a2dissite default
+      #   tags: common
+
+      # - name: Apache | Enable our new site
+      #   action: command a2ensite devserver
+      #   tags: common
+
+      - name: Set Proper ownership of /var/www
+        command: chown -hR www-data:www-data /var/www
+
+
+      - name: Ensure www-data can read and write files but does not alter other permissions
+        command: chmod  -R g+rw /var/www
+
+      - name: Ensure www-data can list directories but does not alter bit x for files.
+        command: "find /var/www -type d -ls -exec chmod g+x {} ';'"
+
+      - name: Adding vagrant to group
+        command: usermod -aG www-data vagrant
+
+      #  Create required writeable dirs
+      - name: Create mainsite/www/assets
+        file: path=/var/www/mainsite/www/assets             owner="www-data"  group="www-data"  mode=0755  state=directory recurse=yes
         tags: common
 
-      - name: Apache | Enable our new site
-        action: command a2ensite devserver
+      - name: Create mainsite/runtime
+        file: path=/var/www/mainsite/runtime                owner="www-data"  group="www-data"  mode=0755  state=directory recurse=yes
         tags: common
 
-      - name: PHP | Info file
-        action: template src=templates/index.php dest=/home/vagrant/www/index.php
+      - name: Create mainsite/www/uploads
+        file: path=/var/www/mainsite/www/uploads            owner="www-data"  group="www-data"  mode=0755  state=directory recurse=yes
         tags: common
 
-      - name: Set permissions
-        action: file path=/home/vagrant/www/index.php mode=0755
+      - name: Create mainsite/rebuild
+        file: path=/var/www/mainsite/rebuild                owner="www-data"  group="www-data"  mode=0755  state=directory recurse=yes
+        tags: common
+
+      - name: Create mainsite/modules/menuAdmin/temp
+        file: path=/var/www/mainsite/modules/menuAdmin/temp owner="www-data"  group="www-data"  mode=0755  state=directory recurse=yes
+        tags: common
+
+      - name: Create mainsite/controllers/csvdumps
+        file: path=/var/www/mainsite/controllers/csvdumps   owner="www-data"  group="www-data"  mode=0755  state=directory recurse=yes
+        tags: common
+
+      - name: Create mobile/runtime
+        file: path=/var/www/mobile/runtime                  owner="www-data"  group="www-data"  mode=0755  state=directory recurse=yes
+        tags: common
+
+      - name: Create mobile/www/assets
+        file: path=/var/www/mobile/www/assets               owner="www-data"  group="www-data"  mode=0755  state=directory recurse=yes
+        tags: common
+
+      - name: Create common/vendors/phpqrcode/cache
+        file: path=/var/www/common/vendors/phpqrcode/cache  owner="www-data"  group="www-data"  mode=0755  state=directory recurse=yes
         tags: common
 
 
@@ -113,11 +155,4 @@
       - name: Restart MySQL
         action: service name=mysql state=restarted
         tags: common
-
-
-
-
-
-
-
 

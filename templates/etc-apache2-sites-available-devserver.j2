@@ -26,6 +26,26 @@
 
 <VirtualHost *:80>
     ServerAdmin  webmaster@localhost
-    DocumentRoot  /home/vagrant/www
-    ServerName  localhost
+    DocumentRoot  /var/www/mainsite/www
+    ServerName  nutritionix
+    ErrorLog /var/www/mainsite/error.log
+    <Directory "/var/www/mainsite/www">
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:8000>
+    ServerAdmin  webmaster@localhost
+    DocumentRoot  /var/www/mobile/www
+    ServerName  nutritionixMobile
+    ErrorLog /var/www/mobile/error.log
+    <Directory "/var/www/mobile/www">
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
 </VirtualHost>

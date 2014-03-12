@@ -9,12 +9,22 @@
 server_hostname: 'example.com'
 
 # php.ini
-php_max_execution_time: '90'
+php_short_open_tag: 'On'
+php_max_execution_time: '900'
+php_max_input_time: '300'
+php_memory_limit: '128m'
+php_error_reporting: 'E_ALL & ~E_DEPRECATED'
 php_display_errors: 'On'
 php_display_startup_errors: 'On'
 php_html_errors: 'On'
-php_post_max_size: '32M'
-php_upload_max_filesize: '32M'
+# Note "GPCS" in single quotes
+php_variables_order: '"GPCS"'
+php_register_globals: 'Off'
+php_post_max_size: '128m'
+php_upload_max_filesize: '128m'
+php_allow_url_fopen: 'On'
+php_allow_url_include: 'On'
+php_default_socket_timeout: '300'
 php_date_timezone: 'US/Central'
 
 # apc.ini
