@@ -45,6 +45,8 @@ mysql_root_password: 'password'
 # apache
 apache_server_admin: 'webmaster@example.com'
 apache_server_alias: '*.*.example.com'
+apache_run_user: 'vagrant'
+apache_run_group: 'www-data'
 
 # vsftpd
 vsftpd_anonymous_enable: 'NO'
